@@ -1,0 +1,23 @@
+{
+  "name": "friend-chat-frontend",
+  "version": "1.0.0",
+  "description": "Friend Chat FrontEnd Application using Electron with Integration of OpenAI API and Supabase.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ranzal07/friend-chat-frontend.git"
+  },
+  "author": "Lavranz R. Tradio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ranzal07/friend-chat-frontend/issues"
+  },
+  "homepage": "https://github.com/Ranzal07/friend-chat-frontend#readme",
+  "devDependencies": {
+    "electron": "^24.3.0"
+  }
+}
