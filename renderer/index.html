@@ -13,9 +13,18 @@
     <title>Friend Chat</title>
   </head>
   <body>
-    <h1>Hello from Electron renderer!</h1>
-    <p>👋</p>
-    <p id="info"></p>
+    <h1>Friend Chat</h1>
+    <div>
+        <form id="form_message">
+            <label for="message">Message:</label><br>
+            <textarea name="message" id="" rows="4"></textarea><br>
+            <input type="submit" value="Submit"><br>
+        </form>
+        <div>
+            <label for="reply_message">Reply Message:</label><br>
+            <textarea id="reply_message" rows="4" readonly></textarea>
+        </div>
+    </div>
   </body>
   <script src="./js/renderer.js"></script>
 </html>

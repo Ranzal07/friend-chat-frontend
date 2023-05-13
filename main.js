@@ -1,6 +1,9 @@
-const { app, BrowserWindow } = require('electron')
+// Imported Modules
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
+const axios = require("axios");
 
+// Main Window
 const isDev = true;
 
 const createWindow = () => {
@@ -20,13 +23,14 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-  createWindow()
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
+    // initialize functions
+    ipcMain.handle('axios.openAI', openAI);
+    createWindow();
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+        }
+    })
 })
 
 app.on('window-all-closed', () => {
@@ -34,3 +38,34 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+// Main Functions
+async function openAI(event, message){
+    let res = null;
+    axios({
+        method: 'post',
+        url: 'https://api.openai.com/v1/chat/completions',
+        data: {
+            model: "text-davinci-003",
+            prompt: "Friend: " + message,
+            temperature: 0.5,
+            max_tokens: 60,
+            top_p: 1.0,
+            frequency_penalty: 0.5,
+            presence_penalty: 0.0,
+            stop: ["You:"]
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer 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'
+        
+        }
+      }).then(function (response) {
+        res = response.data;
+      })
+      .catch(function (error) {
+        res = error;
+      });
+
+    return res;
+}
