@@ -11,20 +11,24 @@
       content="default-src 'self'; script-src 'self'"
     />
     <title>Friend Chat</title>
+    <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Friend Chat</h1>
-    <div>
+    <div class="container bg-info bg-opacity-25 border border-info p-5 mt-2">
+        <h1 class="text-center">Friend Chat</h1>
+
         <form id="form_message">
-            <label for="message">Message:</label><br>
-            <textarea name="message" id="" rows="4"></textarea><br>
-            <input type="submit" value="Submit"><br>
+            <label class="form-label" for="message">Message:</label>
+            <textarea class="form-control mb-3" name="message" id="" rows="4"></textarea>
+            <input class="btn btn-primary mb-3" type="submit" value="Submit">
         </form>
-        <div>
-            <label for="reply_message">Reply Message:</label><br>
-            <textarea id="reply_message" rows="4" readonly></textarea>
+        
+        <div class="mt-3">
+            <label class="form-label" for="reply_message">Reply Message:</label>
+            <textarea class="form-control" id="reply_message" rows="4" readonly></textarea>
         </div>
     </div>
+    <script src="./js/bootstrap/bootstrap.bundle.min.js"></script>
   </body>
   <script src="./js/renderer.js"></script>
 </html>
