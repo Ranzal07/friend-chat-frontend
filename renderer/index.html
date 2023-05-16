@@ -17,7 +17,7 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" >
 	</head>
 	<body class="bg-dark">
-		<div class="container bg-info bg-opacity-25 border border-info p-5 mt-2">
+		<div class="container bg-info bg-opacity-25 border border-info p-5 mt-2 rounded">
 			<h1 class="text-center text-white" id="heading">Friend Chat</h1>
 
 			<div class="container">
@@ -27,7 +27,7 @@
 					<label class="fw-bold text-white text-center mt-4 mb-4">OpenAI Tools</label>
 					<div class="col">
 						<div class="form-check">
-						<input class="form-check-input mt-3" type="radio" name="tools-type" value="Friend Chat" id="flexRadioDefault1" onchange="updateHeading(this)" checked>
+						<input class="form-check-input mt-3" type="radio" name="tools-type" value="Friend Chat" id="flexRadioDefault1" checked>
 						<label class="form-check-label" for="flexRadioDefault1">
 							<img class="w-100 h-75" src="./images/friend-chat.png">
 						</label>
@@ -35,7 +35,7 @@
 					</div>
 					<div class="col">
 						<div class="form-check">
-						<input class="form-check-input mt-3" type="radio" name="tools-type" value="Interview Questions" id="flexRadioDefault2" onchange="updateHeading(this)">
+						<input class="form-check-input mt-3" type="radio" name="tools-type" value="Interview Questions" id="flexRadioDefault2">
 						<label class="form-check-label" for="flexRadioDefault2">
 							<img class="w-100 h-75" src="./images/interview-questions.png">
 						</label>
@@ -59,6 +59,6 @@
 		</div>
 		<script src="./js/bootstrap/bootstrap.bundle.min.js"></script>
 	</body>
-	<script src="./js/renderer.js"></script>
 	<script src="./js/shift-tools.js"></script>
+	<script src="./js/renderer.js"></script>
 </html>

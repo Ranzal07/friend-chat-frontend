@@ -14,10 +14,4 @@ document.addEventListener('DOMContentLoaded', () => {
             heading.textContent = 'Interview Questions';
         }
     });
-  
-    const form = document.querySelector('form');
-        form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        ipcRenderer.send('radioChoice', heading.textContent);
-    });
 });

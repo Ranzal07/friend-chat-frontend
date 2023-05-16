@@ -232,6 +232,7 @@ async function supaBase(event, method, id = '', data = ''){
         data: ( method == 'post' ? data : null )
     }).then(function (response) {
         result = response.data;
+		console.log(response.data)
     })
       .catch(function (error) {
         result = error.response.data;
