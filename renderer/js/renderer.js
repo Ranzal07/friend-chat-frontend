@@ -1,6 +1,7 @@
 const messageContainer = document.querySelector('#message-block');
 const formMsg = document.getElementById("form-msg");
 
+// processing the submit form
 if (formMsg) {
 	formMsg.onsubmit = async function (e) {
 		e.preventDefault();
@@ -99,31 +100,7 @@ async function insertSupabase(toolType,sentValue,replyValue) {
     });
 }
 
-// messageInbox.addEventListener('submit', (e) => {
-// 		e.preventDefault(); // prevent the default form submission behavior
-	
-// 		// get the message text
-// 		const text = messageInputInbox.value.trim();
-	
-// 		if (text) {
-// 			const nameLabel = document.createElement('div');
-// 			nameLabel.classList.add('name-receiver');
-// 			nameLabel.textContent = "Fred";
-// 			// create a new message element
-// 			const messageElement = document.createElement('div');
-// 			messageElement.classList.add('message-i', 'my-1', 'p-2', 'rounded-end');
-// 			messageElement.textContent = text;
-	
-// 			// add the message element to the containerP
-// 			messageContainer.appendChild(nameLabel);
-// 			messageContainer.appendChild(messageElement);
-// 			messageContainer.scrollTop = messageContainer.scrollHeight;
-	
-// 			// reset the message input field
-// 			messageInputInbox.value = '';
-// 		}
-// });
-
+// alert toastify
 function alertMessage(status, message){
 	window.Toastify.showToast({
 		text: message,
@@ -138,24 +115,3 @@ function alertMessage(status, message){
 		},
 	});
 }
-
-
-// if (form) {
-//     form.onsubmit = async function (e) {
-//         e.preventDefault();
-
-//         const formData = new FormData(form);
-
-//         let sentence = formData.get("message");
-//         if (sentence.length <= 5){
-//             alertMessage("error","Please input at least 5 characters");
-//             return;    
-//         }
-				
-//         const response = await window.axios.openAI(formData.get("message"));
-//         document.getElementById("reply_message").innerHTML = JSON.stringify(response.choices[0].text).replace(/\\n/g, '');
-//         for (const [key, value] of formData) {
-//             // output.textContent += `${key}: ${value}\n`;
-//         }
-//     };
-// }

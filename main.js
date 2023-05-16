@@ -180,41 +180,8 @@ app.on('window-all-closed', () => {
   }
 })
 
-// Main Functions
-// async function openAI(event, message){
-//     let result = null;
-
-//     const env = dotenv.parsed;
-
-//     axios({
-//         method: 'post',
-//         url: 'https://api.openai.com/v1/chat/completions',
-//         data: {
-//             model: "text-davinci-003",
-//             prompt: "Friend: " + message,
-//             temperature: 0.5,
-//             max_tokens: 60,
-//             top_p: 1.0,
-//             frequency_penalty: 0.5,
-//             presence_penalty: 0.0,
-//             stop: ["You:"]
-//         },
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization' : 'Bearer ' + env.OPENAI_KEY
-        
-//         }
-//       }).then(function (response) {
-//         result = response.data;
-//       })
-//       .catch(function (error) {
-//         result = error;
-//       });
-
-//     return result;
-//   }
-
-  async function openAI(event, messageValue, toolType){
+// function for connecting to OpenAI API
+async function openAI(event, messageValue, toolType){
     let result = null;
     const env = dotenv.parsed;
   
@@ -222,29 +189,30 @@ app.on('window-all-closed', () => {
         method: 'post',
         url: 'https://api.openai.com/v1/completions',
         data: {
-          model: "text-davinci-003",
-          prompt: ( toolType == 'Friend Chat' ? "Friend:\n\n" : "Create a list of 8 questions for my interview with a science fiction author:\n\n" ) +  messageValue,
-          temperature: ( toolType == 'Friend Chat' ? 0 : 0.7 ),
-          max_tokens: ( toolType == 'Friend Chat' ? 60 : 64 ),
-          top_p: 1.0,
-          frequency_penalty: 0.0,
-          presence_penalty: 0.0
+			model: "text-davinci-003",
+			prompt: ( toolType == 'Friend Chat' ? "Friend:\n\n" : "Create a list of 8 questions for my interview with a science fiction author:\n\n" ) +  messageValue,
+			temperature: ( toolType == 'Friend Chat' ? 0 : 0.7 ),
+			max_tokens: ( toolType == 'Friend Chat' ? 60 : 64 ),
+			top_p: 1.0,
+			frequency_penalty: 0.0,
+			presence_penalty: 0.0
         },
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + env.OPENAI_KEY
         }
-      }).then(function (response) {
+    }).then(function (response) {
         result = response.data;
-      })
-      .catch(function (error) {
+    })
+    .catch(function (error) {
         result = error.response.data;
-      });
+    });
   
     return result;
-  }
+}
 
-  async function supaBase(event, method, id = '', data = ''){
+// function for connecting to Supabase API
+async function supaBase(event, method, id = '', data = ''){
     let result = null;
     const env = dotenv.parsed;
     let query = ( method == 'get' ? '?select=*' : (method == 'delete' ? '?prompt_id=eq.' + id : '') );
@@ -262,12 +230,12 @@ app.on('window-all-closed', () => {
             'Authorization': 'Bearer ' + env.SUPABASE_KEY 
           } ),
         data: ( method == 'post' ? data : null )
-      }).then(function (response) {
+    }).then(function (response) {
         result = response.data;
-      })
+    })
       .catch(function (error) {
         result = error.response.data;
-      });
+    });
   
     return result;
-  }
+}
