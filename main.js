@@ -5,7 +5,7 @@ const axios = require("axios");
 const dotenv = require('dotenv').config();
 
 // Global Variables
-const isDev = false;
+const isDev = true;
 
 const isMac = process.platform === 'darwin';
 
@@ -232,7 +232,6 @@ async function supaBase(event, method, id = '', data = ''){
         data: ( method == 'post' ? data : null )
     }).then(function (response) {
         result = response.data;
-		console.log(response.data)
     })
       .catch(function (error) {
         result = error.response.data;

@@ -38,7 +38,6 @@ if (tbl_prompts) {
         if(e.target && e.target.id == "btn_prompts_del") {
             const id = e.target.name;
             const response = await window.axios.supaBase('delete', id);
-            console.log(response);
             
             alertMessage("success", "Successfully deleted id " + id + '!');
             getPrompts();
