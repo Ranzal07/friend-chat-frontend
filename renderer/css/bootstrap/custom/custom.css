@@ -1,0 +1,53 @@
+.form-control-custom {
+    width: 200px;
+    height: 35px;
+}
+
+#send-button {
+    color: #0084ff;
+}
+
+#message-block{
+    height: 300px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(231, 227, 227);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow-y: scroll;
+}
+
+.message-s {
+    display: flex;
+    max-width: 60%;
+    background-color: #007bff;
+    color: white;
+    white-space: pre-wrap;
+}
+
+.message-i {
+    align-self: flex-start;
+    background-color: #dcf8c6;
+    color: black;
+    white-space: pre-wrap;
+}
+
+#submit-icon {
+    background-color: transparent;
+    color: #007bff;
+    border: none;
+}
+
+.name-sender {
+    padding-right: 1px;
+    padding-top: 2px;
+    font-size: 10px;
+}
+
+.name-receiver {
+    align-self: start;
+    padding-left: 1px;
+    padding-top: 2px;
+    font-size: 10px;
+}

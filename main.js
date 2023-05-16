@@ -5,7 +5,7 @@ const axios = require("axios");
 const dotenv = require('dotenv').config();
 
 // Global Variables
-const isDev = true;
+const isDev = false;
 
 const isMac = process.platform === 'darwin';
 
@@ -29,6 +29,10 @@ const template = [
   {
     label: 'File',
     submenu: [
+        {
+          label: 'App Logs',
+          click: logsWindow
+        },
         {
             label: 'About',
             click: aboutWindow,
@@ -83,6 +87,41 @@ const template = [
   },
 ]
 
+// Application Logs Window
+function logsWindow () {
+  const logs = new BrowserWindow({
+    width: 900,
+    height: 600,
+    alwaysOnTop: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
+
+  logs.setMenuBarVisibility(false);
+
+  if (isDev) {
+    logs.webContents.openDevTools();
+  }
+
+  logs.loadFile(path.join(__dirname, "./renderer/logs.html"));
+}
+
+// About Window
+function aboutWindow () {
+  const about = new BrowserWindow({
+    width: 400,
+    height: 400,
+    alwaysOnTop: true,
+  });
+
+  about.setMenuBarVisibility(false);
+
+  about.loadFile(path.join(__dirname, "./renderer/about.html"));
+}
+
 // Main Window
 const createWindow = () => {
     const main = new BrowserWindow({
@@ -121,6 +160,7 @@ function aboutWindow() {
 app.whenReady().then(() => {
     // initialize functions
     ipcMain.handle('axios.openAI', openAI);
+    ipcMain.handle('axios.supaBase', supaBase);
 
     // Create Main Window
     createWindow();
@@ -141,35 +181,93 @@ app.on('window-all-closed', () => {
 })
 
 // Main Functions
-async function openAI(event, message){
+// async function openAI(event, message){
+//     let result = null;
+
+//     const env = dotenv.parsed;
+
+//     axios({
+//         method: 'post',
+//         url: 'https://api.openai.com/v1/chat/completions',
+//         data: {
+//             model: "text-davinci-003",
+//             prompt: "Friend: " + message,
+//             temperature: 0.5,
+//             max_tokens: 60,
+//             top_p: 1.0,
+//             frequency_penalty: 0.5,
+//             presence_penalty: 0.0,
+//             stop: ["You:"]
+//         },
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization' : 'Bearer ' + env.OPENAI_KEY
+        
+//         }
+//       }).then(function (response) {
+//         result = response.data;
+//       })
+//       .catch(function (error) {
+//         result = error;
+//       });
+
+//     return result;
+//   }
+
+  async function openAI(event, messageValue, toolType){
     let result = null;
-
     const env = dotenv.parsed;
-
-    axios({
+  
+    await axios({
         method: 'post',
-        url: 'https://api.openai.com/v1/chat/completions',
+        url: 'https://api.openai.com/v1/completions',
         data: {
-            model: "text-davinci-003",
-            prompt: "Friend: " + message,
-            temperature: 0.5,
-            max_tokens: 60,
-            top_p: 1.0,
-            frequency_penalty: 0.5,
-            presence_penalty: 0.0,
-            stop: ["You:"]
+          model: "text-davinci-003",
+          prompt: ( toolType == 'Friend Chat' ? "Friend:\n\n" : "Create a list of 8 questions for my interview with a science fiction author:\n\n" ) +  messageValue,
+          temperature: ( toolType == 'Friend Chat' ? 0 : 0.7 ),
+          max_tokens: ( toolType == 'Friend Chat' ? 60 : 64 ),
+          top_p: 1.0,
+          frequency_penalty: 0.0,
+          presence_penalty: 0.0
         },
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization' : 'Bearer ' + env.OPENAI_KEY
-        
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + env.OPENAI_KEY
         }
       }).then(function (response) {
         result = response.data;
       })
       .catch(function (error) {
-        result = error;
+        result = error.response.data;
       });
-
+  
     return result;
-}
+  }
+
+  async function supaBase(event, method, id = '', data = ''){
+    let result = null;
+    const env = dotenv.parsed;
+    let query = ( method == 'get' ? '?select=*' : (method == 'delete' ? '?prompt_id=eq.' + id : '') );
+  
+    await axios({
+        method: method,
+        url: 'https://hrzzmrlbaobrxffzhfmf.supabase.co/rest/v1/prompts' + query,
+        headers: ( method == 'post' ? {
+            'apikey': env.SUPABASE_KEY,
+            'Authorization': 'Bearer ' + env.SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          } : {
+            'apikey': env.SUPABASE_KEY,
+            'Authorization': 'Bearer ' + env.SUPABASE_KEY 
+          } ),
+        data: ( method == 'post' ? data : null )
+      }).then(function (response) {
+        result = response.data;
+      })
+      .catch(function (error) {
+        result = error.response.data;
+      });
+  
+    return result;
+  }
