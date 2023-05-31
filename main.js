@@ -5,7 +5,7 @@ const axios = require("axios");
 const dotenv = require('dotenv').config();
 
 // Global Variables
-const isDev = true;
+const isDev = false;
 
 const isMac = process.platform === 'darwin';
 
@@ -181,7 +181,7 @@ app.on('window-all-closed', () => {
 })
 
 // function for connecting to OpenAI API
-async function openAI(event, messageValue, toolType){
+async function openAI(event, messageValue){
     let result = null;
     const env = dotenv.parsed;
   
@@ -189,13 +189,14 @@ async function openAI(event, messageValue, toolType){
         method: 'post',
         url: 'https://api.openai.com/v1/completions',
         data: {
-			model: "text-davinci-003",
-			prompt: ( toolType == 'Friend Chat' ? "Friend:\n\n" : "Create a list of 8 questions for my interview with a science fiction author:\n\n" ) +  messageValue,
-			temperature: ( toolType == 'Friend Chat' ? 0 : 0.7 ),
-			max_tokens: ( toolType == 'Friend Chat' ? 60 : 64 ),
-			top_p: 1.0,
-			frequency_penalty: 0.0,
-			presence_penalty: 0.0
+          model: "text-davinci-003",
+          prompt: "You:\n\n" +  messageValue,
+          temperature: 0.5,
+          max_tokens: 60,
+          top_p: 1.0,
+          frequency_penalty: 0.5,
+          presence_penalty: 0.0,
+          stop: ["You:"],
         },
         headers: {
           'Content-Type': 'application/json',

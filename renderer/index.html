@@ -17,48 +17,34 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" >
 	</head>
 	<body class="bg-dark">
-		<div class="container bg-info bg-opacity-25 border border-info p-5 mt-2 rounded">
-			<h1 class="text-center text-white" id="heading">Friend Chat</h1>
+		<div id="message-cover" class="container p-1 p-5 mt-2 rounded">
+			<div class="text-center">
+				<img src="./images/friend-chat.png">
+			</div>
 
 			<div class="container">
-			<form id="form-msg">
-				<div class="container">
-				<div class="row mb-3 text-start">
-					<label class="fw-bold text-white text-center mt-4 mb-4">OpenAI Tools</label>
-					<div class="col">
-						<div class="form-check">
-						<input class="form-check-input mt-3" type="radio" name="tools-type" value="Friend Chat" id="flexRadioDefault1" checked>
-						<label class="form-check-label" for="flexRadioDefault1">
-							<img class="w-100 h-75" src="./images/friend-chat.png">
-						</label>
+				<form id="form-msg">
+					<div class="container">
+						<div class="imgLogo text-center pb-3">
+							<img src="./images/img_logo.png">
 						</div>
 					</div>
-					<div class="col">
-						<div class="form-check">
-						<input class="form-check-input mt-3" type="radio" name="tools-type" value="Interview Questions" id="flexRadioDefault2">
-						<label class="form-check-label" for="flexRadioDefault2">
-							<img class="w-100 h-75" src="./images/interview-questions.png">
-						</label>
-						</div>
+					
+					<div id="chat-nav">
+						<img src="./images/anime-boy.png" alt="">
+						<h4 id="profile-name">Friend</h3>
+						<span type="button" class="material-icons" id="edit-icon">edit</span>
 					</div>
-				</div>
-				</div>
-				<div id="message-block" class="mb-3"></div>
-				<div class="form-group p-2">
-					<div class="row">
-						<div class="col">
-							<input type="text" class="form-control" id="message-inputSent" name="sent_message">
-						</div> 
-						<div class="col-auto">
-							<button type="submit" class="material-icons pt-2" id="submit-icon">send</button>
-						</div>
-					<div>
-				</div>
-			</form>
+
+					<div id="message-block"></div>
+					<div id="chat-box">
+						<input type="text" class="form-control" id="message-inputSent" name="sent_message">
+						<button type="submit" class="material-icons" id="submit-icon">send</button>
+					</div>
+				</form>
 			</div>
 		</div>
 		<script src="./js/bootstrap/bootstrap.bundle.min.js"></script>
 	</body>
-	<script src="./js/shift-tools.js"></script>
 	<script src="./js/renderer.js"></script>
 </html>

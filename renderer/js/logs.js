@@ -10,19 +10,15 @@ async function getPrompts () {
         let date = new Date(response[key].created_at.replace(' ', 'T'));
 
         htmlResult += '<tr>' +
-            '<th scope="row">' +  response[key].prompt_id + '</th>' +
-            '<td>' + response[key].tool_type + '</td>' +
+            '<td scope="row">' +  response[key].prompt_id + '</td>' +
             '<td>' + response[key].msg_sent + '</td>' +
             '<td>' + response[key].msg_reply + '</td>' +
             '<td>' + date.toLocaleString('en-US', { timeZone: 'UTC' }) + '</td>' +
             '<td>' + 
                 '<div class="btn-group" role="group">' +
-                    '<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">' +
-                        'Action' +
+                    '<button type="button" id="btn_prompts_del" class="btn btn-danger" aria-expanded="false" name="' + response[key].prompt_id + '">' +
+                        'Delete' +
                     '</button>' +
-                    '<ul class="dropdown-menu">' +
-                        '<li><a id="btn_prompts_del" class="dropdown-item" href="#" name="' + response[key].prompt_id + '">Remove</a></li>' +
-                    '</ul>' +
                 '</div>' +
         '</tr>';
     });
@@ -37,10 +33,9 @@ if (tbl_prompts) {
     tbl_prompts.onclick = async function (e) {
         if(e.target && e.target.id == "btn_prompts_del") {
             const id = e.target.name;
-            const response = await window.axios.supaBase('delete', id);
-            
-            alertMessage("success", "Successfully deleted id " + id + '!');
+            await window.axios.supaBase('delete', id);
             getPrompts();
+            alertMessage("success", "Successfully deleted ID " + id + '!');
         }
     };
 }
@@ -50,6 +45,7 @@ function alertMessage(status, message){
         text: message,
         duration: 3000,
         stopOnFocus: true,
+        className: 'alert-message-logs',
         style: {
             textAlign: "center",
             background: status == "error" ? "red" : "green",
